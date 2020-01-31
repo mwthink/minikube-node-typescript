@@ -2,7 +2,7 @@
   "name": "minikube-node-typescript",
   "version": "0.1.0",
   "main": "index.js",
-  "repository": "git@github.com-mwthink:mwthink/minikube-node-typescript.git",
+  "repository": "git@github.com:mwthink/minikube-node-typescript.git",
   "author": "Marshall Williams <marshall@mwthink.net>",
   "license": "MIT",
   "private": true,
