@@ -9,7 +9,7 @@ spec:
       enableServiceLinks: false
       initContainers:
       - name: install
-        image: node:12.6
+        image:  node:12.6-alpine
         imagePullPolicy: IfNotPresent
         args: ["yarn","install","--prefer-offline","--cache-folder=/yarn/cache","--non-interactive"]
 
@@ -30,7 +30,7 @@ spec:
 
       containers:
       - name: node
-        image: node:12.6
+        image: node:12.6-alpine
         imagePullPolicy: IfNotPresent
         args: ["yarn","run","dev"]
 
