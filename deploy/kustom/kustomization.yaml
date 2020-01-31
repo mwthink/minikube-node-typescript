@@ -1,0 +1,7 @@
+resources:
+- service.yaml
+- deployment.yaml
+
+commonLabels:
+  app.kubernetes.io/name: node-typescript
+  app.kubernetes.io/part-of: node-typescript

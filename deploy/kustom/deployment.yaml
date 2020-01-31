@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-typescript
+  labels: {}
+spec:
+  template:
+    spec:
+      enableServiceLinks: false
+      initContainers:
+      - name: install
+        image: node:12.6
+        imagePullPolicy: IfNotPresent
+        args: ["yarn","install","--prefer-offline","--cache-folder=/yarn/cache","--non-interactive"]
+
+        env:
+        - name: NODE_ENV
+          value: "development"
+
+        volumeMounts:
+        - name: yarn
+          subPath: cache
+          mountPath: /yarn/cache
+        - name: workdir
+          mountPath: /usr/src/app
+          readOnly: true
+        - name: node-modules
+          mountPath: /usr/src/app/node_modules
+        workingDir: /usr/src/app
+
+      containers:
+      - name: node
+        image: node:12.6
+        imagePullPolicy: IfNotPresent
+        args: ["yarn","run","dev"]
+
+        env:
+        - name: NODE_ENV
+          value: "development"
+
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: workdir
+          mountPath: /usr/src/app
+          readOnly: true
+        - name: node-modules
+          mountPath: /usr/src/app/node_modules
+          readOnly: true
+        workingDir: /usr/src/app
+
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: workdir
+        persistentVolumeClaim:
+          claimName: minikube-node-typescript
+      - name: yarn
+        persistentVolumeClaim:
+          claimName: yarn-data
+      - name: node-modules
+        emptyDir: {}
